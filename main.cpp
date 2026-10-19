@@ -87,6 +87,33 @@ int main() {
     setTimes[1] = -1;
 
 
+    // Race 3: INSERTING
+    start = high_resolution_clock::now();
+    vector<string>::iterator vectorIt = vectorCodes.begin() + vectorCodes.size() / 2;
+
+    vectorCodes.insert(vectorIt, "TESTCODE");
+    end = high_resolution_clock::now();
+
+    vectorTimes[2] = duration_cast<nanoseconds>(end - start).count();
+    start = high_resolution_clock::now();
+
+    // the time includes finding the middle, not just the insert    
+    list<string>::iterator listIt = listCodes.begin();
+    for (int i = 0; i < listCodes.size() / 2; i++) {
+        listIt++;
+    }
+
+    listCodes.insert(listIt, "TESTCODE");
+    end = high_resolution_clock::now();
+
+    listTimes[2] = duration_cast<nanoseconds>(end - start).count();
+
+    start = high_resolution_clock::now();
+    setCodes.insert("TESTCODE");
+    end = high_resolution_clock::now();
+
+    setTimes[2] = duration_cast<nanoseconds>(end - start).count();
+
     cout << "Vector size: " << vectorCodes.size() << endl;
     cout << "List size: " << listCodes.size() << endl;
     cout << "Set size: " << setCodes.size() << endl;
@@ -102,6 +129,12 @@ int main() {
     cout << "Vector sorting time: " << vectorTimes[1] << " ns" << endl;
     cout << "List sorting time: " << listTimes[1] << " ns" << endl;
     cout << "Set sorting time: " << setTimes[1] << endl;
+
+    cout << endl;
+
+    cout << "Vector inserting time: " << vectorTimes[2] << " ns" << endl;
+    cout << "List inserting time: " << listTimes[2] << " ns" << endl;
+    cout << "Set inserting time: " << setTimes[2] << " ns" << endl;
 
     return 0;
 }
