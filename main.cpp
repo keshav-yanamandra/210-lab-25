@@ -117,7 +117,7 @@ int main() {
 
     // the time includes finding the middle, not just the insert    
     list<string>::iterator listIt = listCodes.begin();
-    for (int i = 0; i < listCodes.size() / 2; i++) {
+    for (int i = 0; i < (int)listCodes.size() / 2; i++) {
         listIt++;
     }
 
@@ -144,7 +144,9 @@ int main() {
     start = high_resolution_clock::now();
     
     list<string>::iterator listDeleteIt = listCodes.begin();
-    for (int i = 0; i < listCodes.size() / 2; i++) {
+
+    //casting to int to fix the warning
+    for (int i = 0; i < (int)listCodes.size() / 2; i++) {
         listDeleteIt++;
     }
 
@@ -156,7 +158,7 @@ int main() {
 
     // A set has no random access, so walk to the middle. this will take longer
     set<string>::iterator setDeleteIt = setCodes.begin();
-    for (int i = 0; i < setCodes.size() / 2; i++) {
+    for (int i = 0; i < (int)setCodes.size() / 2; i++) {
         setDeleteIt++;
     }
 
