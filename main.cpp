@@ -10,6 +10,7 @@
 #include <set>
 #include <chrono>
 #include <algorithm>
+#include <iomanip>
 
 using namespace std;
 using namespace std::chrono;
@@ -18,6 +19,19 @@ int main() {
 
     const int NUM_RACES = 4;
     const int NUM_CONTAINERS = 3;
+
+    string raceNames[NUM_RACES] = {
+        "Read",
+        "Sort",
+        "Insert",
+        "Delete"
+    };
+
+    string containerNames[NUM_CONTAINERS] = {
+        "Vector",
+        "List",
+        "Set"
+    };
 
     vector<string> vectorCodes;
     list<string> listCodes;
@@ -126,8 +140,7 @@ int main() {
     vectorCodes.erase(vectorDeleteIt);
     end = high_resolution_clock::now();
 
-    vectorTimes[NUM_CONTAINERS] = duration_cast<nanoseconds>(end - start).count();
-
+    vectorTimes[3] = duration_cast<nanoseconds>(end - start).count();
     start = high_resolution_clock::now();
     
     list<string>::iterator listDeleteIt = listCodes.begin();
@@ -137,8 +150,7 @@ int main() {
 
     listCodes.erase(listDeleteIt);
     end = high_resolution_clock::now();
-    listTimes[NUM_CONTAINERS] = duration_cast<nanoseconds>(end - start).count();
-
+    listTimes[3] = duration_cast<nanoseconds>(end - start).count();
 
     start = high_resolution_clock::now();
 
@@ -151,8 +163,8 @@ int main() {
     setCodes.erase(setDeleteIt);
     end = high_resolution_clock::now();
 
-    setTimes[NUM_CONTAINERS] = duration_cast<nanoseconds>(end - start).count();
-
+    setTimes[3] = duration_cast<nanoseconds>(end - start).count();
+    
     cout << endl;
 
     cout << "Times in nanoseconds" << endl;
