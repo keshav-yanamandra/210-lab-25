@@ -9,6 +9,7 @@
 #include <list>
 #include <set>
 #include <chrono>
+#include <algorithm>
 
 using namespace std;
 using namespace std::chrono;
@@ -20,9 +21,9 @@ int main() {
 
     string code;
 
-    long long vectorTime;
-    long long listTime;
-    long long setTime;
+    long long vectorTimes[4] = {};
+    long long listTimes[4] = {};
+    long long setTimes[4] = {};
 
     // Race 1: READING
     // File is opened before timing so only the reading is timed.
@@ -37,8 +38,7 @@ int main() {
 
     auto end = high_resolution_clock::now();
 
-    vectorTime = duration_cast<nanoseconds>(end - start).count();
-
+    vectorTimes[0] = duration_cast<nanoseconds>(end - start).count();
     finVector.close();
 
 
@@ -52,8 +52,7 @@ int main() {
 
     end = high_resolution_clock::now();
 
-    listTime = duration_cast<nanoseconds>(end - start).count();
-
+    listTimes[0] = duration_cast<nanoseconds>(end - start).count();
     finList.close();
 
 
@@ -67,9 +66,25 @@ int main() {
 
     end = high_resolution_clock::now();
 
-    setTime = duration_cast<nanoseconds>(end - start).count();
-
+    setTimes[0] = duration_cast<nanoseconds>(end - start).count();
+    
     finSet.close();
+
+    // Race 2: SORTING
+
+    start = high_resolution_clock::now();
+    sort(vectorCodes.begin(), vectorCodes.end());
+    end = high_resolution_clock::now();
+    vectorTimes[1] = duration_cast<nanoseconds>(end - start).count();
+
+    start = high_resolution_clock::now();
+    listCodes.sort();
+    end = high_resolution_clock::now();
+    listTimes[1] = duration_cast<nanoseconds>(end - start).count();
+
+
+    // A set is already sorted
+    setTimes[1] = -1;
 
 
     cout << "Vector size: " << vectorCodes.size() << endl;
@@ -78,9 +93,15 @@ int main() {
 
     cout << endl;
 
-    cout << "Vector reading time: " << vectorTime << " ns" << endl;
-    cout << "List reading time: " << listTime << " ns" << endl;
-    cout << "Set reading time: " << setTime << " ns" << endl;
+    cout << "Vector reading time: " << vectorTimes[0] << " ns" << endl;
+    cout << "List reading time: " << listTimes[0] << " ns" << endl;
+    cout << "Set reading time: " << setTimes[0] << " ns" << endl;
+
+    cout << endl;
+
+    cout << "Vector sorting time: " << vectorTimes[1] << " ns" << endl;
+    cout << "List sorting time: " << listTimes[1] << " ns" << endl;
+    cout << "Set sorting time: " << setTimes[1] << endl;
 
     return 0;
 }
