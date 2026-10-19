@@ -15,15 +15,19 @@ using namespace std;
 using namespace std::chrono;
 
 int main() {
+
+    const int NUM_RACES = 4;
+    const int NUM_CONTAINERS = 3;
+
     vector<string> vectorCodes;
     list<string> listCodes;
     set<string> setCodes;
 
     string code;
 
-    long long vectorTimes[4] = {};
-    long long listTimes[4] = {};
-    long long setTimes[4] = {};
+    long long vectorTimes[NUM_RACES] = {};
+    long long listTimes[NUM_RACES] = {};
+    long long setTimes[NUM_RACES] = {};
 
     // Race 1: READING
     // File is opened before timing so only the reading is timed.
@@ -122,7 +126,7 @@ int main() {
     vectorCodes.erase(vectorDeleteIt);
     end = high_resolution_clock::now();
 
-    vectorTimes[3] = duration_cast<nanoseconds>(end - start).count();
+    vectorTimes[NUM_CONTAINERS] = duration_cast<nanoseconds>(end - start).count();
 
     start = high_resolution_clock::now();
     
@@ -133,7 +137,7 @@ int main() {
 
     listCodes.erase(listDeleteIt);
     end = high_resolution_clock::now();
-    listTimes[3] = duration_cast<nanoseconds>(end - start).count();
+    listTimes[NUM_CONTAINERS] = duration_cast<nanoseconds>(end - start).count();
 
 
     start = high_resolution_clock::now();
@@ -147,37 +151,30 @@ int main() {
     setCodes.erase(setDeleteIt);
     end = high_resolution_clock::now();
 
-    setTimes[3] = duration_cast<nanoseconds>(end - start).count();
-
-
-    cout << "Vector size: " << vectorCodes.size() << endl;
-    cout << "List size: " << listCodes.size() << endl;
-    cout << "Set size: " << setCodes.size() << endl;
+    setTimes[NUM_CONTAINERS] = duration_cast<nanoseconds>(end - start).count();
 
     cout << endl;
 
-    cout << "Vector reading time: " << vectorTimes[0] << " ns" << endl;
-    cout << "List reading time: " << listTimes[0] << " ns" << endl;
-    cout << "Set reading time: " << setTimes[0] << " ns" << endl;
+    cout << "Times in nanoseconds" << endl;
+    cout << endl;
+
+    cout << left << setw(15) << "Operation";
+
+    for (int j = 0; j < NUM_CONTAINERS; j++) {
+        cout << right << setw(15) << containerNames[j];
+    }
 
     cout << endl;
 
-    cout << "Vector sorting time: " << vectorTimes[1] << " ns" << endl;
-    cout << "List sorting time: " << listTimes[1] << " ns" << endl;
-    cout << "Set sorting time: " << setTimes[1] << endl;
+    for (int i = 0; i < NUM_RACES; i++) {
+        cout << left << setw(15) << raceNames[i];
 
-    cout << endl;
+        cout << right << setw(15) << vectorTimes[i];
+        cout << right << setw(15) << listTimes[i];
+        cout << right << setw(15) << setTimes[i];
 
-    cout << "Vector inserting time: " << vectorTimes[2] << " ns" << endl;
-    cout << "List inserting time: " << listTimes[2] << " ns" << endl;
-    cout << "Set inserting time: " << setTimes[2] << " ns" << endl;
-
-    cout << endl;
-
-    cout << "Vector deleting time: " << vectorTimes[3] << " ns" << endl;
-    cout << "List deleting time: " << listTimes[3] << " ns" << endl;
-    cout << "Set deleting time: " << setTimes[3] << " ns" << endl;
-
+        cout << endl;
+    }
     return 0;
 }
 
