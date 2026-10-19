@@ -114,6 +114,42 @@ int main() {
 
     setTimes[2] = duration_cast<nanoseconds>(end - start).count();
 
+
+    // Race 4: DELETING
+
+    start = high_resolution_clock::now();
+    vector<string>::iterator vectorDeleteIt = vectorCodes.begin() + vectorCodes.size() / 2;
+    vectorCodes.erase(vectorDeleteIt);
+    end = high_resolution_clock::now();
+
+    vectorTimes[3] = duration_cast<nanoseconds>(end - start).count();
+
+    start = high_resolution_clock::now();
+    
+    list<string>::iterator listDeleteIt = listCodes.begin();
+    for (int i = 0; i < listCodes.size() / 2; i++) {
+        listDeleteIt++;
+    }
+
+    listCodes.erase(listDeleteIt);
+    end = high_resolution_clock::now();
+    listTimes[3] = duration_cast<nanoseconds>(end - start).count();
+
+
+    start = high_resolution_clock::now();
+
+    // A set has no random access, so walk to the middle. this will take longer
+    set<string>::iterator setDeleteIt = setCodes.begin();
+    for (int i = 0; i < setCodes.size() / 2; i++) {
+        setDeleteIt++;
+    }
+
+    setCodes.erase(setDeleteIt);
+    end = high_resolution_clock::now();
+
+    setTimes[3] = duration_cast<nanoseconds>(end - start).count();
+
+
     cout << "Vector size: " << vectorCodes.size() << endl;
     cout << "List size: " << listCodes.size() << endl;
     cout << "Set size: " << setCodes.size() << endl;
@@ -135,6 +171,12 @@ int main() {
     cout << "Vector inserting time: " << vectorTimes[2] << " ns" << endl;
     cout << "List inserting time: " << listTimes[2] << " ns" << endl;
     cout << "Set inserting time: " << setTimes[2] << " ns" << endl;
+
+    cout << endl;
+
+    cout << "Vector deleting time: " << vectorTimes[3] << " ns" << endl;
+    cout << "List deleting time: " << listTimes[3] << " ns" << endl;
+    cout << "Set deleting time: " << setTimes[3] << " ns" << endl;
 
     return 0;
 }
